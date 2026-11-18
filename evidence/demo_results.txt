@@ -1,0 +1,10 @@
+Skipping row 4: Unknown product type: service
+Skipping row 5: could not convert string to float: 'abc'
+3 products loaded.
+Load attempt finished.
+Bulk discount total: 230.00
+10% discount total: 225.00
+5% student discount total: 237.50
+P001: Desk Lamp - Ship the physical item
+D001: Photo Editor - Provide a digital download
+P003: Monitor Stand - Ship the physical item

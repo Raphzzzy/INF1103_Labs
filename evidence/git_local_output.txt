@@ -1,0 +1,14 @@
+$ git init -b main
+Initialized empty Git repository in /mnt/data/_lab09_work/INF1103_Lab09_Submission/.git/
+$ git add .
+$ git -c user.name="Lab 9 Local Example" -c user.email="lab9@example.invalid" commit -m "Complete Lab 9 inventory management project"
+ create mode 100644 tests/test_csv_loader.py
+ create mode 100644 tests/test_factory_and_validation.py
+ create mode 100644 tests/test_input_and_demo.py
+ create mode 100644 tests/test_strategy.py
+$ git status --short
+(no output: clean working tree)
+$ git log -1 --oneline
+89e5d3b Complete Lab 9 inventory management project
+$ git remote -v
+# No GitHub remote or push was performed. This is local workflow evidence only.

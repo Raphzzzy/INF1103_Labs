@@ -1,0 +1,60 @@
+digraph Lab9UML {
+  graph [label="INF1103 Lab 9 - Inventory Management System UML", labelloc=t, fontsize=26, fontname="DejaVu Sans", fontcolor="#12294D", bgcolor="white", pad=0.4, nodesep=0.5, ranksep=1.1, splines=polyline, rankdir=LR, outputorder="edgesfirst"];
+  node [shape=plain, fontname="DejaVu Sans"];
+  edge [fontname="DejaVu Sans", fontsize=11, color="#425466", penwidth=1.5, arrowsize=1.0];
+
+  Supplier [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F7FAFF" CELLPADDING="7">
+    <TR><TD BGCOLOR="#E4EBF5"><B>Supplier</B></TD></TR><TR><TD ALIGN="LEFT">+ supplier_id: str<BR ALIGN="LEFT"/>+ name: str</TD></TR>
+  </TABLE>>];
+  Product [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F7FAFF" CELLPADDING="7">
+    <TR><TD BGCOLOR="#D8E7F5"><I>&lt;&lt;abstract&gt;&gt;</I><BR/><B>Product</B></TD></TR>
+    <TR><TD ALIGN="LEFT">+ product_id: str<BR ALIGN="LEFT"/>+ name: str<BR ALIGN="LEFT"/>+ price: float<BR ALIGN="LEFT"/>+ stock_quantity: int<BR ALIGN="LEFT"/>+ supplier: Supplier</TD></TR>
+    <TR><TD ALIGN="LEFT"><I>+ fulfilment_method(): str</I></TD></TR>
+  </TABLE>>];
+  PhysicalProduct [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F7FAFF" CELLPADDING="7">
+    <TR><TD BGCOLOR="#E4EBF5"><B>PhysicalProduct</B></TD></TR><TR><TD ALIGN="LEFT">+ fulfilment_method(): str</TD></TR>
+  </TABLE>>];
+  DigitalProduct [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F7FAFF" CELLPADDING="7">
+    <TR><TD BGCOLOR="#E4EBF5"><B>DigitalProduct</B></TD></TR><TR><TD ALIGN="LEFT">+ fulfilment_method(): str</TD></TR>
+  </TABLE>>];
+  Inventory [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F7FAFF" CELLPADDING="7">
+    <TR><TD BGCOLOR="#E4EBF5"><B>Inventory</B></TD></TR><TR><TD ALIGN="LEFT">+ products: dict[str, Product]</TD></TR>
+    <TR><TD ALIGN="LEFT">+ add_product(product): None<BR ALIGN="LEFT"/>+ get_product(id): Product<BR ALIGN="LEFT"/>+ list_products(): list</TD></TR>
+  </TABLE>>];
+  ProductFactory [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F7FAFF" CELLPADDING="7">
+    <TR><TD BGCOLOR="#E4EBF5"><B>ProductFactory</B></TD></TR>
+    <TR><TD ALIGN="LEFT"><U>+ create(type, id, name, price, stock, supplier): Product</U></TD></TR>
+  </TABLE>>];
+  OrderLine [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F7FAFF" CELLPADDING="7">
+    <TR><TD BGCOLOR="#E4EBF5"><B>OrderLine</B></TD></TR><TR><TD ALIGN="LEFT">+ product: Product<BR ALIGN="LEFT"/>+ quantity: int</TD></TR>
+    <TR><TD ALIGN="LEFT">+ calculate_subtotal(): float</TD></TR>
+  </TABLE>>];
+  Order [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F7FAFF" CELLPADDING="7">
+    <TR><TD BGCOLOR="#E4EBF5"><B>Order</B></TD></TR><TR><TD ALIGN="LEFT">+ order_id: str<BR ALIGN="LEFT"/>+ order_lines: list[OrderLine]<BR ALIGN="LEFT"/>+ discount: DiscountStrategy</TD></TR>
+    <TR><TD ALIGN="LEFT">+ add_line(line): None<BR ALIGN="LEFT"/>+ set_discount(strategy): None<BR ALIGN="LEFT"/>+ calculate_total(): float</TD></TR>
+  </TABLE>>];
+  DiscountStrategy [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F0F7F2" CELLPADDING="7">
+    <TR><TD BGCOLOR="#D4EADC"><I>&lt;&lt;abstract&gt;&gt;</I><BR/><B>DiscountStrategy</B></TD></TR><TR><TD ALIGN="LEFT"><I>+ apply(total: float): float</I></TD></TR>
+  </TABLE>>];
+  NoDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F0F7F2" CELLPADDING="7"><TR><TD BGCOLOR="#E3F2E7"><B>NoDiscount</B></TD></TR><TR><TD>+ apply(total): float</TD></TR></TABLE>>];
+  PercentageDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F0F7F2" CELLPADDING="7"><TR><TD BGCOLOR="#E3F2E7"><B>PercentageDiscount</B></TD></TR><TR><TD ALIGN="LEFT">+ percentage: float<BR ALIGN="LEFT"/>+ apply(total): float</TD></TR></TABLE>>];
+  BulkDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F0F7F2" CELLPADDING="7"><TR><TD BGCOLOR="#E3F2E7"><B>BulkDiscount</B></TD></TR><TR><TD ALIGN="LEFT">+ threshold: float<BR ALIGN="LEFT"/>+ amount: float<BR ALIGN="LEFT"/>+ apply(total): float</TD></TR></TABLE>>];
+  StudentDiscount [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#5C7489" BGCOLOR="#F0F7F2" CELLPADDING="7"><TR><TD BGCOLOR="#E3F2E7"><B>StudentDiscount</B></TD></TR><TR><TD>+ apply(total): float</TD></TR></TABLE>>];
+
+  PhysicalProduct -> Product [arrowhead=empty, color="#3E6993"];
+  DigitalProduct -> Product [arrowhead=empty, color="#3E6993"];
+  NoDiscount -> DiscountStrategy [arrowhead=empty, color="#3A8460"];
+  PercentageDiscount -> DiscountStrategy [arrowhead=empty, color="#3A8460"];
+  BulkDiscount -> DiscountStrategy [arrowhead=empty, color="#3A8460"];
+  StudentDiscount -> DiscountStrategy [arrowhead=empty, color="#3A8460"];
+  ProductFactory -> Product [style=dashed, label="«creates»", constraint=false, arrowhead=vee];
+  Product -> Supplier [taillabel="0..*", headlabel="1", labeldistance=2, arrowhead=vee, constraint=false];
+  Inventory -> Product [dir=both, arrowtail=odiamond, arrowhead=vee, taillabel="1", headlabel="0..*", labeldistance=1.5, constraint=false];
+  OrderLine -> Product [taillabel="0..*", headlabel="1", labeldistance=1.4, arrowhead=vee, constraint=false];
+  Order -> OrderLine [dir=both, arrowtail=diamond, arrowhead=vee, taillabel="1", headlabel="0..*", labeldistance=1.4, constraint=false];
+  Order -> DiscountStrategy [taillabel="0..*", headlabel="1", labeldistance=1.5, arrowhead=vee, penwidth=2, color="#3A8460"];
+
+  {rank=same; PhysicalProduct; DigitalProduct; ProductFactory; Inventory; OrderLine;}
+  {rank=same; NoDiscount; PercentageDiscount; BulkDiscount; StudentDiscount;}
+  {rank=same; Product; Order;}
+}

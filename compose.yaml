@@ -1,0 +1,5 @@
+services:
+  inventory:
+    build: .
+    image: inf1103-lab09:latest
+    command: python main.py
